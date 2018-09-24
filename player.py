@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.6.2 Back Panther"
+    VERSION = "1.6.4 Back Panther"
 
 
     def betRequest(self, game_state):
@@ -59,7 +59,8 @@ class Player:
         seen = set()
         uniq = []
         for card in my_cards:
-            card_ranks.append(card["rank"])
+            if card["rank"] in "6 7 8 9 10 J Q K A":
+                card_ranks.append(card["rank"])
         for x in card_ranks:
             if x not in seen:
                 uniq.append(x)
@@ -96,13 +97,13 @@ class Player:
                 ranks.append(int(cards["rank"]))
             except ValueError:
                 if cards["rank"] == "J":
-                    ranks.append(10)
-                elif cards["rank"] == "Q":
                     ranks.append(11)
-                elif cards["rank"] == "K":
+                elif cards["rank"] == "Q":
                     ranks.append(12)
-                elif cards["rank"] == "A":
+                elif cards["rank"] == "K":
                     ranks.append(13)
+                elif cards["rank"] == "A":
+                    ranks.append(14)
 
         ranks.sort()
 
