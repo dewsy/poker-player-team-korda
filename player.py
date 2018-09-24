@@ -66,3 +66,27 @@ class Player:
             card_ranks.append(card["rank"])
         if len(card_ranks) - len(set(card_ranks)) == 3:
             return True
+
+    def check_for_line(self, my_cards):
+        ranks = []
+        line = 0
+        for cards in my_cards:
+            try:
+                ranks.append(int(cards["rank"]))
+            except ValueError:
+                if cards["rank"] == "J":
+                    ranks.append(10)
+                elif cards["rank"] == "D":
+                    ranks.append(11)
+                elif cards["rank"] == "K":
+                    ranks.append(12)
+                elif cards["rank"] == "A":
+                    ranks.append(13)
+
+        ranks.sort()
+
+        for i in range(len(ranks) - 1):
+            if (ranks[i + 1] - ranks[i]) == 1:
+                line += 1
+        if line >= 3:
+            return True
