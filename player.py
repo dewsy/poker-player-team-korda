@@ -1,19 +1,23 @@
 class Player:
-    VERSION = "1.1 Bruce Banner"
+
+    VERSION = "1.2.1 Bruce Banner"
+
 
     def betRequest(self, game_state):
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_for_pairs(my_cards):
-            return hold + game_state["minimum_raise"] + 100
-        for card in my_cards:
-            if card["rank"] in "2 3 4 5 6 7 8 9":
-                return hold
-        return hold + game_state["minimum_raise"] + 10
+            return hold + game_state["minimum_raise"] + us["stack"]/4
+        for card in us["hole_cards"]:
+            if card["rank"] in "J Q K A":
+                return hold + game_state["minimum_raise"] + 10
+        return hold
 
     def showdown(self, game_state):
         pass
+
+
 
     def check_for_pairs(self, my_cards):
         card_ranks = []
