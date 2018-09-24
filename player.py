@@ -1,12 +1,14 @@
 class Player:
 
-    VERSION = "1.6.1 Back Panther"
+    VERSION = "1.6.2 Back Panther"
 
 
     def betRequest(self, game_state):
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
+        if game_state["current_buy_in"] * 100 <= us["stack"] * 5:
+            return hold
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_for_line(my_cards):
