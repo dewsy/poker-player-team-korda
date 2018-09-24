@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.3.1 Hulk"
+    VERSION = "1.3.2 Hulk"
 
 
     def betRequest(self, game_state):
@@ -9,12 +9,12 @@ class Player:
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
-        if self.check_for_players_in(game_state) == False:
-            return 0
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
+        if self.check_for_players_in(game_state) == False:
+            return 0
         for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
                 return hold + game_state["minimum_raise"] + us["stack"]/10
