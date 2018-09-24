@@ -19,7 +19,6 @@ class Player:
             return hold + game_state["minimum_raise"] + us["stack"]/4
         if self.bluff():
             return hold + game_state["minimum_raise"] + us["stack"] / 2
-        if not self.check_for_players_in(game_state) or not self.check_for_high_card(us):
         if self.check_for_players_in(game_state) == False or self.check_for_high_card(us) == False:
             return 0
         if self.check_for_high_card(us):
