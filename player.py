@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.5.1 Thor"
+    VERSION = "1.6 Back Panther"
 
 
     def betRequest(self, game_state):
@@ -17,17 +17,26 @@ class Player:
             return hold + game_state["minimum_raise"] + us["stack"]/4
         if self.check_for_players_in(game_state) == False or self.check_for_high_card(us) == False:
             return 0
-        if self.check_for_high_card(us):
+        if self.check_for_high_card(game_state, us):
                 return hold + game_state["minimum_raise"] + us["stack"]/7
         return hold
 
     def showdown(self, game_state):
         pass
 
-    def check_for_high_card(self, us):
+    def check_for_high_card(self, game_state, us):
         for card in us["hole_cards"]:
-            if card["rank"] in "J Q K A":
+            if card["rank"] in "K A":
                 return True
+
+        for card2 in us["hole_cards"]:
+            if card2["rank"] in "J Q K A":
+                statuses = []
+                for player in game_state["players"]:
+                    if player["status"] == "out":
+                        statuses.append("w")
+                if len(statuses) >= 3:
+                    return True
         return False
 
 
@@ -86,7 +95,7 @@ class Player:
             except ValueError:
                 if cards["rank"] == "J":
                     ranks.append(10)
-                elif cards["rank"] == "D":
+                elif cards["rank"] == "Q":
                     ranks.append(11)
                 elif cards["rank"] == "K":
                     ranks.append(12)
