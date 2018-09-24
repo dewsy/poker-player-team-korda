@@ -1,3 +1,5 @@
+from random import randint
+
 class Player:
 
     VERSION = "1.4 Thor"
@@ -15,6 +17,8 @@ class Player:
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
+        if self.bluff():
+            return hold + game_state["minimum_raise"] + us["stack"] / 2
         if not self.check_for_players_in(game_state) or not self.check_for_high_card(us):
             return 0
         if self.check_for_high_card(us):
@@ -23,6 +27,11 @@ class Player:
 
     def showdown(self, game_state):
         pass
+
+    def bluff(self):
+        if randint(0,19) == 1:
+            return True
+
 
     def check_for_high_card(self, us):
         for card in us["hole_cards"]:
