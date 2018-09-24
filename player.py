@@ -7,8 +7,8 @@ class Player:
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
-        if self.check_for_players_in() == False:
-            return 0
+        #if self.check_for_players_in() == False:
+         #   return 0
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
