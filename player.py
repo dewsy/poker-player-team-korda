@@ -10,10 +10,10 @@ class Player:
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
-            return hold + game_state["minimum_raise"] + 100
-        for card in my_cards:
+            return hold + game_state["minimum_raise"] + us["stack"]/4
+        for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
-                return hold + game_state["minimum_raise"] + 10
+                return hold + game_state["minimum_raise"] + us["stack"]/10
         return hold
 
     def showdown(self, game_state):
@@ -34,6 +34,19 @@ class Player:
             else:
                 return True
 
+    def check_flush(self, game_state):
+        flush = []
+        us = game_state["players"][game_state["in_action"]]
+        my_cards = us["hole_cards"] + game_state["community_cards"]
+        for card in my_cards:
+            flush.append(card['suit'])
+        if len(game_state['community_cards']) == 3:
+            if len(set(flush)) == 1:
+                return True
+        else:
+            if flush.count('spades') == 5 or flush.count('clubs') == 5 or flush.count('diamonds') == 5 or flush.count('hearts') == 5:
+                    return True
+        return False
 
     def check_drill(self, my_cards):
         card_ranks = []
