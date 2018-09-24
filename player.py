@@ -8,7 +8,7 @@ class Player:
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_for_pairs(my_cards):
-            return hold + game_state["minimum_raise"] + 100
+            return hold + game_state["minimum_raise"] + 101
         for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
                 return hold + game_state["minimum_raise"] + 10
