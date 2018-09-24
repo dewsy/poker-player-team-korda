@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.2.2 Bruce Banner"
+    VERSION = "1.2.3 Bruce Banner"
 
 
     def betRequest(self, game_state):
