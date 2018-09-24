@@ -15,7 +15,7 @@ class Player:
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
-        if self.check_for_players_in(game_state) == False or self.check_for_high_card(us) == False:
+        if self.check_for_players_in(game_state) == False or self.check_for_high_card(game_state, us) == False:
             return 0
         if self.check_for_high_card(game_state, us):
                 return hold + game_state["minimum_raise"] + us["stack"]/7
