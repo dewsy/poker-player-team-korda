@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.2.3 Bruce Banner"
+    VERSION = "1.3 Hulk"
 
 
     def betRequest(self, game_state):
@@ -9,6 +9,10 @@ class Player:
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
+        if self.check_for_players_in(game_state) == False:
+            return 0
+        if self.check_drill(my_cards):
+            return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
         for card in us["hole_cards"]:
@@ -18,6 +22,16 @@ class Player:
 
     def showdown(self, game_state):
         pass
+
+    def check_for_players_in(self, game_state):
+        statuses= []
+        for player in game_state["players"]:
+            if player["status"] == "out":
+                statuses.append(player)
+        if len(statuses) == 4:
+            return True
+        else:
+            return False
 
 
 
@@ -48,7 +62,9 @@ class Player:
                     return True
         return False
 
-
-    def royal_flush(self, game_state):
-        us = game_state["players"][game_state["in_action"]]
-        my_cards = us["hole_cards"] + game_state["community_cards"]
+    def check_drill(self, my_cards):
+        card_ranks = []
+        for card in my_cards:
+            card_ranks.append(card["rank"])
+        if len(card_ranks) - len(set(card_ranks)) == 3:
+            return True
