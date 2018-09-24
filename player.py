@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.3 Hulk"
+    VERSION = "1.3.1 Hulk"
 
 
     def betRequest(self, game_state):
@@ -68,3 +68,16 @@ class Player:
             card_ranks.append(card["rank"])
         if len(card_ranks) - len(set(card_ranks)) == 3:
             return True
+
+
+    def check_royal_flush(self, my_cards):
+        royal_flush_rank = []
+        royal_flush_suit = []
+        for card in my_cards:
+            royal_flush_rank.append(card["rank"])
+            royal_flush_suit.append(card["suit"])
+        if 'A' and 'J' and 'Q' and 'K' and '10' in royal_flush_rank:
+            same_cards = True
+        if same_cards:
+            if len(set(royal_flush_suit)) == 1:
+                return True
