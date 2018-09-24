@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.4 Thor"
+    VERSION = "1.5 Thor"
 
 
     def betRequest(self, game_state):
@@ -15,7 +15,7 @@ class Player:
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
-        if not self.check_for_players_in(game_state) or not self.check_for_high_card(us):
+        if self.check_for_players_in(game_state) == False or self.check_for_high_card(us) == False:
             return 0
         if self.check_for_high_card(us):
                 return hold + game_state["minimum_raise"] + us["stack"]/7
@@ -28,7 +28,7 @@ class Player:
         for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
                 return True
-            return False
+        return False
 
 
     def check_for_players_in(self, game_state):
