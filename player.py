@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.3.4 Hulk"
+    VERSION = "1.4 Thor"
 
 
     def betRequest(self, game_state):
