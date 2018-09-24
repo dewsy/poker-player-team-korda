@@ -7,6 +7,8 @@ class Player:
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
+        if self.check_flush(game_state):
+            return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
         for card in us["hole_cards"]:
@@ -45,3 +47,8 @@ class Player:
             if flush.count('spades') == 5 or flush.count('clubs') == 5 or flush.count('diamonds') == 5 or flush.count('hearts') == 5:
                     return True
         return False
+
+
+    def royal_flush(self, game_state):
+        us = game_state["players"][game_state["in_action"]]
+        my_cards = us["hole_cards"] + game_state["community_cards"]
