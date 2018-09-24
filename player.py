@@ -10,5 +10,18 @@ class Player:
                 return hold
         return hold + game_state["minimum_raise"] + 10
 
+
     def showdown(self, game_state):
         pass
+
+
+
+    def check_flush(self, game_state):
+        flush = []
+        us = game_state["players"][game_state["in_action"]]
+        my_cards = us["hole_cards"] + game_state["community_cards"]
+        for card in my_cards:
+            flush.append(card['suit'])
+        if len(set(flush)) == 1:
+            return True
+        return False
