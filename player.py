@@ -32,6 +32,16 @@ class Player:
             else:
                 return True
 
-
-
-
+    def check_flush(self, game_state):
+        flush = []
+        us = game_state["players"][game_state["in_action"]]
+        my_cards = us["hole_cards"] + game_state["community_cards"]
+        for card in my_cards:
+            flush.append(card['suit'])
+        if len(game_state['community_cards']) == 3:
+            if len(set(flush)) == 1:
+                return True
+        else:
+            if flush.count('spades') == 5 or flush.count('clubs') == 5 or flush.count('diamonds') == 5 or flush.count('hearts') == 5:
+                    return True
+        return False
