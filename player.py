@@ -7,6 +7,8 @@ class Player:
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
+        if self.check_royal_flush(my_cards):
+            return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_for_players_in(game_state) == False:
