@@ -20,8 +20,9 @@ class Player:
         if self.bluff():
             return hold + game_state["minimum_raise"] + us["stack"] / 2
         if self.check_for_players_in(game_state) == False or self.check_for_high_card(us) == False:
+        if self.check_for_players_in(game_state) == False or self.check_for_high_card(game_state, us) == False:
             return 0
-        if self.check_for_high_card(us):
+        if self.check_for_high_card(game_state, us):
                 return hold + game_state["minimum_raise"] + us["stack"]/7
         return hold
 
@@ -34,9 +35,19 @@ class Player:
 
 
     def check_for_high_card(self, us):
+    def check_for_high_card(self, game_state, us):
         for card in us["hole_cards"]:
-            if card["rank"] in "J Q K A":
+            if card["rank"] in "K A":
                 return True
+
+        for card2 in us["hole_cards"]:
+            if card2["rank"] in "J Q K A":
+                statuses = []
+                for player in game_state["players"]:
+                    if player["status"] == "out":
+                        statuses.append("w")
+                if len(statuses) >= 3:
+                    return True
         return False
 
 
