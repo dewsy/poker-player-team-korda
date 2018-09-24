@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.2 Bruce Banner"
+    VERSION = "1.2.1 Bruce Banner"
 
 
     def betRequest(self, game_state):
@@ -9,7 +9,7 @@ class Player:
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + 100
-        for card in my_cards:
+        for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
                 return hold + game_state["minimum_raise"] + 10
         return hold
