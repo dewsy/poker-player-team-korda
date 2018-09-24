@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.2.1 Bruce Banner"
+    VERSION = "1.2.2 Bruce Banner"
 
 
     def betRequest(self, game_state):
@@ -11,7 +11,7 @@ class Player:
             return hold + game_state["minimum_raise"] + us["stack"]/4
         for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
-                return hold + game_state["minimum_raise"] + 10
+                return hold + game_state["minimum_raise"] + us["stack"]/10
         return hold
 
     def showdown(self, game_state):
