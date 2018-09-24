@@ -1,12 +1,14 @@
 class Player:
 
-    VERSION = "1.2.3 Bruce Banner"
+    VERSION = "1.3 Hulk"
 
 
     def betRequest(self, game_state):
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
+        if self.check_for_players_in() == False:
+            return 0
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
@@ -18,6 +20,16 @@ class Player:
 
     def showdown(self, game_state):
         pass
+
+    def check_for_players_in(self, game_state):
+        statuses= []
+        for player in game_state["players"]:
+            if player["status"] == "out":
+                statuses.append(player)
+        if len(statuses) == 4:
+            return True
+        else:
+            return False
 
 
 
