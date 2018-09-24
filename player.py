@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.3.1 Hulk"
+    VERSION = "1.3.3 Hulk"
 
 
     def betRequest(self, game_state):
@@ -11,12 +11,14 @@ class Player:
             return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
-        if self.check_for_players_in(game_state) == False:
-            return 0
+        if self.check_for_line(my_cards):
+            return hold + game_state["minimum_raise"] + us["stack"] / 2
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"]/4
+        if self.check_for_players_in(game_state) == False:
+            return 0
         for card in us["hole_cards"]:
             if card["rank"] in "J Q K A":
                 return hold + game_state["minimum_raise"] + us["stack"]/10
@@ -26,10 +28,10 @@ class Player:
         pass
 
     def check_for_players_in(self, game_state):
-        statuses= []
+        statuses = []
         for player in game_state["players"]:
             if player["status"] == "out":
-                statuses.append(player)
+                statuses.append("w")
         if len(statuses) == 4:
             return True
         else:
@@ -69,6 +71,30 @@ class Player:
         for card in my_cards:
             card_ranks.append(card["rank"])
         if len(card_ranks) - len(set(card_ranks)) == 3:
+            return True
+
+    def check_for_line(self, my_cards):
+        ranks = []
+        line = 0
+        for cards in my_cards:
+            try:
+                ranks.append(int(cards["rank"]))
+            except ValueError:
+                if cards["rank"] == "J":
+                    ranks.append(10)
+                elif cards["rank"] == "D":
+                    ranks.append(11)
+                elif cards["rank"] == "K":
+                    ranks.append(12)
+                elif cards["rank"] == "A":
+                    ranks.append(13)
+
+        ranks.sort()
+
+        for i in range(len(ranks) - 1):
+            if (ranks[i + 1] - ranks[i]) == 1:
+                line += 1
+        if line >= 4:
             return True
 
 
