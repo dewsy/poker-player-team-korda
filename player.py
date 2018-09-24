@@ -1,4 +1,3 @@
-
 class Player:
     VERSION = "1.0 Black Widow"
 
