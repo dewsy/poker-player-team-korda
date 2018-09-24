@@ -11,8 +11,6 @@ class Player:
             return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_for_line(my_cards):
             return hold + game_state["minimum_raise"] + us["stack"] / 2
-        if self.check_for_players_in(game_state) == False:
-            return 0
         if self.check_drill(my_cards):
             return us["stack"] / 3
         if self.check_for_pairs(my_cards):
