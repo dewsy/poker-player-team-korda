@@ -1,6 +1,6 @@
 class Player:
 
-    VERSION = "1.3 Hulk"
+    VERSION = "1.3.1 Hulk"
 
 
     def betRequest(self, game_state):
@@ -24,10 +24,10 @@ class Player:
         pass
 
     def check_for_players_in(self, game_state):
-        statuses= []
+        statuses = []
         for player in game_state["players"]:
             if player["status"] == "out":
-                statuses.append(player)
+                statuses.append("w")
         if len(statuses) == 4:
             return True
         else:
