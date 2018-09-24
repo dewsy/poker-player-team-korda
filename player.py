@@ -3,6 +3,8 @@ class Player:
     VERSION = "1.2.1 Bruce Banner"
 
 
+    VERSION = "1.2.1 Bruce Banner"
+
     def betRequest(self, game_state):
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
