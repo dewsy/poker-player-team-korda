@@ -7,6 +7,8 @@ class Player:
         us = game_state["players"][game_state["in_action"]]
         hold = game_state["current_buy_in"] - us["bet"]
         my_cards = us["hole_cards"] + game_state["community_cards"]
+        if self.check_royal_flush(my_cards):
+            return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
         if self.check_for_line(my_cards):
@@ -100,3 +102,16 @@ class Player:
                 line += 1
         if line >= 4:
             return True
+
+
+    def check_royal_flush(self, my_cards):
+        royal_flush_rank = []
+        royal_flush_suit = []
+        for card in my_cards:
+            royal_flush_rank.append(card["rank"])
+            royal_flush_suit.append(card["suit"])
+        if 'A' and 'J' and 'Q' and 'K' and '10' in royal_flush_rank:
+            same_cards = True
+        if same_cards:
+            if len(set(royal_flush_suit)) == 1:
+                return True
