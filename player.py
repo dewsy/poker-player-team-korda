@@ -9,6 +9,8 @@ class Player:
         my_cards = us["hole_cards"] + game_state["community_cards"]
         if self.check_flush(game_state):
             return hold + game_state['minimum_raise'] + us["stack"]
+        if self.check_for_line(my_cards):
+            return hold + game_state["minimum_raise"] + us["stack"] / 2
         if self.check_for_players_in(game_state) == False:
             return 0
         if self.check_drill(my_cards):
@@ -90,5 +92,5 @@ class Player:
         for i in range(len(ranks) - 1):
             if (ranks[i + 1] - ranks[i]) == 1:
                 line += 1
-        if line >= 3:
+        if line >= 4:
             return True
